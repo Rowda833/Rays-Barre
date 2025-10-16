@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <!-- Basic meta / SEO -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Brand — Landing Page</title>
+  <meta name="description" content="Modern responsive landing page with navbar, hero, services, about, and contact sections." />
+
+  <!-- CSS (single-file) -->
+  <style>
+    /* =========================
+       BRAND CONFIG - change these to update theme
+       ========================= */
+    :root{
+      --brand: #0f62fe;
+      --brand-600: #0b53d8;
+      --bg: #f7f9fc;
+      --muted: #6b7280;
+      --card-bg: #ffffff;
+      --radius: 12px;
+      --max-width: 1100px;
+      --container-padding: 1rem;
+      --shadow: 0 6px 18px rgba(15, 34, 64, 0.08);
+      --glass: rgba(255,255,255,0.6);
+    }
+
+    /* Reset & base */
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,var(--bg),#fff);
+      color:#0b1220;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      -webkit-text-size-adjust:100%;
+    }
+    a{color:inherit; text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* Layout container */
+    .container{
+      width:100%;
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:0 var(--container-padding);
+    }
+
+    /* =========================
+       NAVBAR
+       ========================= */
+    header.site-header{
+      position:fixed;
+      top:0; left:0; right:0;
+      background:rgba(255,255,255,0.8);
+      backdrop-filter:saturate(140%) blur(6px);
+      border-bottom:1px solid rgba(15,22,40,0.04);
+      z-index:40;
+    }
+    .nav-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      height:64px;
+    }
+    .brand{
+      display:flex;
+      gap:.6rem;
+      align-items:center;
+      font-weight:700;
+      font-size:1.05rem;
+    }
+    .brand .logo{
+      width:36px; height:36px;
+      display:inline-grid;
+      place-items:center;
+      border-radius:8px;
+      background:linear-gradient(135deg,var(--brand),var(--brand-600));
+      color:white;
+      font-weight:800;
+      box-shadow:var(--shadow);
+    }
+
+    nav.main-nav{
+      display:flex;
+      gap:1rem;
+      align-items:center;
+    }
+    nav.main-nav a{
+      padding:.6rem .8rem;
+      border-radius:8px;
+      color:var(--muted);
+      font-weight:600;
+      font-size:.95rem;
+    }
+    nav.main-nav a:hover,
+    nav.main-nav a[aria-current="true"]{
+      color:var(--brand);
+      background:rgba(11,83,216,0.06);
+    }
+
+    /* CTA */
+    .cta{
+      background:var(--brand);
+      color:white;
+      padding:.55rem .9rem;
+      border-radius:10px;
+      font-weight:700;
+      box-shadow: 0 6px 18px rgba(11,83,216,0.12);
+    }
+
+    /* Mobile menu */
+    .hamburger{
+      display:none;
+      background:none;
+      border:0;
+      padding:.4rem;
+      border-radius:8px;
+      cursor:pointer;
+    }
+
+    /* spacer so content doesn't sit under fixed header */
+    .header-spacer{height:64px}
+
+    /* =========================
+       HERO
+       ========================= */
+    .hero{
+      padding:4.5rem 0 3.5rem;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:2rem;
+      align-items:center;
+      min-height:68vh;
+    }
+    .hero-inner{
+      display:flex;
+      gap:2rem;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .hero-copy{
+      flex:1 1 420px;
+      max-width:680px;
+    }
+    .eyebrow{
+      display:inline-block;
+      background:linear-gradient(90deg,var(--brand),var(--brand-600));
+      color:white;
+      padding:.25rem .6rem;
+      border-radius:999px;
+      font-weight:700;
+      font-size:.78rem;
+      margin-bottom:.8rem;
+    }
+    .hero h1{
+      margin:0 0 .6rem 0;
+      font-size:2.1rem;
+      line-height:1.05;
+    }
+    .hero p.lead{
+      margin:0 0 1.25rem 0;
+      color:var(--muted);
+      font-size:1.05rem;
+    }
+    .hero-ctas{display:flex; gap:0.75rem; flex-wrap:wrap}
+    .hero-visual{
+      flex:0 1 360px;
+      background:linear-gradient(180deg, rgba(15,98,254,0.06), rgba(11,83,216,0.02));
+      border-radius:16px;
+      padding:1rem;
+      box-shadow:var(--shadow);
+    }
+    .visual-card{
+      border-radius:12px;
+      overflow:hidden;
+      background:var(--card-bg);
+      padding:1rem;
+    }
+
+    /* =========================
+       SECTIONS: services | about | contact
+       ========================= */
+    section{
+      padding:3rem 0;
+    }
+    h2.section-title{
+      font-size:1.25rem;
+      margin:0 0 .6rem 0;
+    }
+    .section-sub{
+      color:var(--muted);
+      margin:0 0 1.4rem 0;
+    }
+
+    /* Services grid */
+    .services-grid{
+      display:grid;
+      gap:1rem;
+      grid-template-columns:1fr;
+    }
+    .service-card{
+      background:var(--card-bg);
+      border-radius:12px;
+      padding:1rem;
+      box-shadow:var(--shadow);
+      display:flex;
+      gap:1rem;
+      align-items:start;
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .service-card:hover{ transform:translateY(-6px) }
+    .svc-icon{
+      width:56px;height:56px;border-radius:10px;
+      display:grid;place-items:center;font-size:1.4rem;
+      background:linear-gradient(180deg, rgba(15,98,254,0.12), rgba(11,83,216,0.04));
+      flex:0 0 56px;
+    }
+    .svc-body h3{margin:.1rem 0 .45rem 0;font-size:1.02rem}
+    .svc-body p{margin:0;color:var(--muted);font-size:.95rem}
+
+    /* About layout */
+    .about-grid{display:grid;gap:1rem}
+    .about-row{display:flex;gap:1rem;flex-wrap:wrap}
+    .team{
+      display:flex;gap:1rem;flex-wrap:wrap;
+      margin-top:1rem;
+    }
+    .person{
+      background:var(--card-bg);
+      padding:.8rem;
+      border-radius:10px;
+      box-shadow:var(--shadow);
+      display:flex;gap:.75rem;align-items:center;
+    }
+    .avatar{
+      width:56px;height:56px;border-radius:10px;background:#efeff8;
+      display:grid;place-items:center;font-weight:700;
+    }
+
+    /* Contact */
+    .contact-wrap{
+      display:grid;
+      gap:1rem;
+      grid-template-columns:1fr;
+    }
+    form.contact-form{
+      background:var(--card-bg);
+      border-radius:12px;
+      padding:1rem;
+      box-shadow:var(--shadow);
+      display:grid;
+      gap:.7rem;
+    }
+    label{font-weight:600;font-size:. nine rem;}
+    .row{display:flex;gap:.6rem;flex-wrap:wrap}
+    .field{
+      display:flex;flex-direction:column;
+      gap:.35rem;
+      flex:1 1 220px;
+    }
+    input[type="text"], input[type="email"], textarea{
+      padding:.6rem .7rem;
+      border:1px solid rgba(11,22,40,0.06);
+      border-radius:8px;font-size:.98rem;
+      resize:vertical;
+      min-height:44px;
+    }
+    textarea{min-height:120px}
+    .error{color:#b91c1c;font-size:.88rem}
+    .success{color:#064e3b;font-size:.98rem}
+
+    /* Footer */
+    footer.site-footer{
+      padding:2rem 0;
+      border-top:1px solid rgba(11,22,40,0.04);
+    }
+    .footer-inner{display:flex;gap:1rem;align-items:center;justify-content:space-between;flex-wrap:wrap}
+    .back-top{font-weight:700;cursor:pointer;padding:.45rem .6rem;border-radius:8px}
+
+    /* Responsive */
+    @media(min-width:720px){
+      .hero{min-height:64vh}
+      .hero-inner{gap:3rem}
+      .services-grid{grid-template-columns:repeat(3,1fr)}
+      .about-grid{grid-template-columns:1fr 360px}
+      .contact-wrap{grid-template-columns:1fr 360px}
+    }
+    @media(max-width:719px){
+      .hamburger{display:inline-flex}
+      nav.main-nav{
+        position:fixed; inset:auto 12px auto 12px;
+        top:64px;
+        right:12px;
+        background:linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.98));
+        border-radius:12px;
+        padding:.6rem;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:.35rem;
+        box-shadow:var(--shadow);
+        display:none;
+      }
+      nav.main-nav[data-open="true"]{display:flex}
+      .hero h1{font-size:1.6rem}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============= NAVBAR ============= -->
+  <header class="site-header" role="banner">
+    <div class="container nav-inner" aria-label="Main navigation">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">B</span>
+        <span class="brand-name">Brand</span>
+      </div>
+
+      <nav class="main-nav" id="mainNav" role="navigation" aria-label="Primary">
+        <a href="#home" data-target="home">Home</a>
+        <a href="#services" data-target="services">Services</a>
+        <a href="#about" data-target="about">About</a>
+        <a href="#contact" data-target="contact">Contact</a>
+        <a href="#contact" class="cta" id="navCTA">Get Started</a>
+      </nav>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-controls="mainNav" aria-expanded="false">
+        <!-- simple hamburger icon -->
+        <svg width="22" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18" stroke="#0b1220" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- spacer for fixed header -->
+  <div class="header-spacer" id="home"></div>
+
+  <!-- ============= HERO ============= -->
+  <main>
+    <section class="hero container" aria-labelledby="hero-heading">
+      <div class="hero-inner">
+        <div class="hero-copy" role="region" aria-label="Introduction">
+          <span class="eyebrow">New • 2025</span>
+          <h1 id="hero-heading">Beautiful websites — fast.</h1>
+          <p class="lead">We build accessible, responsive sites that look great on any device. Clean code, simple design, and smooth interactions.</p>
+
+          <div class="hero-ctas" role="group" aria-label="Hero call to actions">
+            <a href="#contact" class="cta">Get Started</a>
+            <a href="#services" style="padding:.55rem .9rem;border-radius:10px;border:1px solid rgba(11,22,40,0.06);font-weight:700">See Services</a>
+          </div>
+
+          <!-- small features / trust -->
+          <div style="margin-top:1.2rem;color:var(--muted);font-size:.95rem;display:flex;gap:1rem;flex-wrap:wrap">
+            <div><strong>✅</strong> 99.9% uptime</div>
+            <div><strong>🔒</strong> Secure by default</div>
+            <div><strong>⚡</strong> Fast performance</div>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="visual-card">
+            <!-- placeholder visual: small mock browser window -->
+            <div style="background:linear-gradient(180deg,#ffffff,#f4f6fb);border-radius:10px;padding:1rem;display:flex;flex-direction:column;gap:.8rem">
+              <div style="display:flex;align-items:center;gap:.6rem;">
+                <span style="width:12px;height:12px;border-radius:50%;background:#ff5f56;display:inline-block"></span>
+                <span style="width:12px;height:12px;border-radius:50%;background:#ffbd2e;display:inline-block"></span>
+                <span style="width:12px;height:12px;border-radius:50%;background:#27c93f;display:inline-block"></span>
+                <div style="flex:1"></div>
+                <div style="font-size:.8rem;color:var(--muted)">brand.example/hero</div>
+              </div>
+              <div style="height:220px;border-radius:8px;background:linear-gradient(90deg,#eaf2ff,#fff);display:flex;align-items:center;justify-content:center;color:var(--brand);font-weight:800;font-size:1.1rem">
+                Placeholder visual
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= SERVICES ============= -->
+    <section id="services" class="container" aria-labelledby="svc-title">
+      <header>
+        <h2 class="section-title" id="svc-title">Services</h2>
+        <p class="section-sub">We offer design and development services tailored to small businesses and startups.</p>
+      </header>
+
+      <div class="services-grid" role="list">
+        <article class="service-card" role="listitem" aria-labelledby="svc1-title">
+          <div class="svc-icon" aria-hidden="true">
+            <!-- simple svg icon -->
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M3 12h18" stroke="#0b1220" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </div>
+          <div class="svc-body">
+            <h3 id="svc1-title">Website Design</h3>
+            <p>Create modern, responsive designs focused on usability and conversion.</p>
+          </div>
+        </article>
+
+        <article class="service-card" role="listitem" aria-labelledby="svc2-title">
+          <div class="svc-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="#0b1220" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </div>
+          <div class="svc-body">
+            <h3 id="svc2-title">Frontend Dev</h3>
+            <p>Semantic, accessible HTML/CSS and interactive JavaScript for great UX.</p>
+          </div>
+        </article>
+
+        <article class="service-card" role="listitem" aria-labelledby="svc3-title">
+          <div class="svc-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M3 12h18" stroke="#0b1220" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </div>
+          <div class="svc-body">
+            <h3 id="svc3-title">Performance</h3>
+            <p>Speed and SEO-first optimizations to improve conversions and reach.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============= ABOUT ============= -->
+    <section id="about" class="container" aria-labelledby="about-title">
+      <header>
+        <h2 class="section-title" id="about-title">About</h2>
+        <p class="section-sub">Small team, big results. We help founders ship polished websites quickly.</p>
+      </header>
+
+      <div class="about-grid">
+        <div>
+          <p>Founded in 2023, Brand helps businesses launch modern, accessible websites without the headache. We focus on clean design, reliable hosting recommendations, and pragmatic code you can maintain.</p>
+
+          <div class="team" aria-label="Team members">
+            <div class="person" role="group" aria-label="Alice — CEO">
+              <div class="avatar" aria-hidden="true">A</div>
+              <div>
+                <div style="font-weight:700">Alice Noor</div>
+                <div style="color:var(--muted);font-size:.9rem">CEO & Product</div>
+              </div>
+            </div>
+
+            <div class="person" role="group" aria-label="Omar — Lead Dev">
+              <div class="avatar" aria-hidden="true">O</div>
+              <div>
+                <div style="font-weight:700">Omar Salah</div>
+                <div style="color:var(--muted);font-size:.9rem">Lead Developer</div>
+              </div>
+            </div>
+
+            <div class="person" role="group" aria-label="Lina — Designer">
+              <div class="avatar" aria-hidden="true">L</div>
+              <div>
+                <div style="font-weight:700">Lina Yusuf</div>
+                <div style="color:var(--muted);font-size:.9rem">Designer</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside aria-hidden="false" style="align-self:start;">
+          <!-- small card with stats -->
+          <div style="background:var(--card-bg);padding:1rem;border-radius:12px;box-shadow:var(--shadow)">
+            <h3 style="margin:0 0 .4rem 0">By the numbers</h3>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:.8rem">
+              <div><strong>120+</strong><div style="color:var(--muted)">Projects</div></div>
+              <div><strong>98%</strong><div style="color:var(--muted)">Satisfaction</div></div>
+              <div><strong>1.2s</strong><div style="color:var(--muted)">Avg load</div></div>
+              <div><strong>24/7</strong><div style="color:var(--muted)">Support</div></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============= CONTACT ============= -->
+    <section id="contact" class="container" aria-labelledby="contact-title">
+      <header>
+        <h2 class="section-title" id="contact-title">Contact Us</h2>
+        <p class="section-sub">Have a project or question? Send us a message and we'll get back within 1 business day.</p>
+      </header>
+
+      <div class="contact-wrap" role="region" aria-label="Contact form and details">
+        <!-- CONTACT FORM -->
+        <form class="contact-form" id="contactForm" novalidate>
+          <!-- accessible labels -->
+          <div class="row">
+            <div class="field">
+              <label for="name">Name <span aria-hidden="true" style="color:#b91c1c">*</span></label>
+              <input id="name" name="name" type="text" required aria-required="true" />
+              <div class="error" id="error-name" aria-live="polite" style="display:none"></div>
+            </div>
+            <div class="field">
+              <label for="email">Email <span aria-hidden="true" style="color:#b91c1c">*</span></label>
+              <input id="email" name="email" type="email" required aria-required="true" />
+              <div class="error" id="error-email" aria-live="polite" style="display:none"></div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="subject">Subject</label>
+            <input id="subject" name="subject" type="text" />
+          </div>
+
+          <div class="field">
+            <label for="message">Message <span aria-hidden="true" style="color:#b91c1c">*</span></label>
+            <textarea id="message" name="message" required aria-required="true"></textarea>
+            <div class="error" id="error-message" aria-live="polite" style="display:none"></div>
+          </div>
+
+          <div style="display:flex;gap:.6rem;align-items:center;justify-content:space-between;flex-wrap:wrap">
+            <button type="submit" class="cta" id="submitBtn">Send message</button>
+            <div id="formFeedback" aria-live="polite" style="min-height:1.2rem"></div>
+          </div>
+        </form>
+
+        <!-- CONTACT DETAILS -->
+        <aside style="align-self:start">
+          <div style="background:var(--card-bg);padding:1rem;border-radius:12px;box-shadow:var(--shadow)">
+            <h3 style="margin:0 0 .5rem 0">Contact details</h3>
+            <p style="margin:.2rem 0"><strong>Email</strong><br><a href="mailto:hello@brand.example">hello@brand.example</a></p>
+            <p style="margin:.2rem 0"><strong>Phone</strong><br><a href="tel:+1234567890">+1 (234) 567-890</a></p>
+            <p style="margin:.2rem 0;color:var(--muted)">We typically reply within one business day.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============= FOOTER ============= -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div style="color:var(--muted)">© <span id="year"></span> Brand. All rights reserved.</div>
+      <div style="display:flex;gap:.6rem;align-items:center">
+        <div class="back-top" id="backTop" role="button" tabindex="0" aria-label="Back to top">Back to top ↑</div>
+        <div style="color:var(--muted);font-size:.95rem">Follow: <a href="#" aria-label="Twitter link">Twitter</a> • <a href="#" aria-label="LinkedIn link">LinkedIn</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================
+       Minimal JS: menu, active nav, form validation, mailto fallback
+       ========================= -->
+  <script>
+    // Header nav toggle for mobile
+    (function(){
+      const hamburger = document.getElementById('hamburger');
+      const mainNav = document.getElementById('mainNav');
+      hamburger.addEventListener('click', () => {
+        const open = mainNav.getAttribute('data-open') === 'true';
+        mainNav.setAttribute('data-open', String(!open));
+        hamburger.setAttribute('aria-expanded', String(!open));
+      });
+
+      // Smooth scroll + set aria-current on nav links
+      const navLinks = Array.from(mainNav.querySelectorAll('a[href^="#"]'));
+      function setActiveLink() {
+        const fromTop = window.scrollY + 80;
+        navLinks.forEach(link => {
+          const target = document.querySelector(link.getAttribute('href'));
+          if (!target) return;
+          const top = target.offsetTop;
+          const bottom = top + target.offsetHeight;
+          if (fromTop >= top && fromTop < bottom) {
+            link.setAttribute('aria-current','true');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        });
+      }
+      window.addEventListener('scroll', setActiveLink, {passive:true});
+      setActiveLink();
+
+      // Close mobile nav when clicking a link
+      navLinks.forEach(a => a.addEventListener('click', () => {
+        if (window.innerWidth < 720) {
+          mainNav.setAttribute('data-open', 'false');
+          hamburger.setAttribute('aria-expanded','false');
+        }
+      }));
+
+      // Back to top
+      const backTop = document.getElementById('backTop');
+      backTop.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+      backTop.addEventListener('keydown', (e) => { if(e.key==='Enter') backTop.click() });
+
+      // Footer year
+      document.getElementById('year').textContent = new Date().getFullYear();
+    })();
+
+    // Simple form validation + mailto fallback
+    (function(){
+      const form = document.getElementById('contactForm');
+      const feedback = document.getElementById('formFeedback');
+      const submitBtn = document.getElementById('submitBtn');
+
+      function showError(id, message){
+        const el = document.getElementById(id);
+        el.style.display = 'block';
+        el.textContent = message;
+      }
+      function clearError(id){
+        const el = document.getElementById(id);
+        el.style.display = 'none';
+        el.textContent = '';
+      }
+
+      function validate() {
+        let ok = true;
+        const name = form.name.value.trim();
+        const email = form.email.value.trim();
+        const message = form.message.value.trim();
+
+        // name
+        if (!name) { showError('error-name','Name is required'); ok=false } else clearError('error-name');
+        // email basic pattern
+        const emailPattern = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+        if (!email) { showError('error-email','Email is required'); ok=false }
+        else if (!emailPattern.test(email)) { showError('error-email','Enter a valid email'); ok=false }
+        else clearError('error-email');
+        // message
+        if (!message) { showError('error-message','Message is required'); ok=false } else clearError('error-message');
+
+        return ok;
+      }
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        feedback.textContent = '';
+        if (!validate()) {
+          feedback.innerHTML = '<span class="error">Please fix the errors above.</span>';
+          return;
+        }
+
+        // Try to open mailto: fallback with form contents
+        const name = encodeURIComponent(form.name.value.trim());
+        const email = encodeURIComponent(form.email.value.trim());
+        const subject = encodeURIComponent(form.subject.value.trim() || 'Website inquiry');
+        const body = encodeURIComponent([
+          "Name: " + form.name.value.trim(),
+          "Email: " + form.email.value.trim(),
+          "Subject: " + (form.subject.value.trim() || '-'),
+          "",
+          form.message.value.trim()
+        ].join('\\n'));
+
+        const mailto = `mailto:hello@brand.example?subject=${subject}&body=${body}`;
+
+        // UI feedback
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+
+        // Attempt to open mail client. If popup blocked or user cancels, still show confirmation message.
+        setTimeout(() => {
+          // open in new window/tab - most browsers will try to open mail client
+          window.location.href = mailto;
+
+          // Show success confirmation in UI
+          feedback.innerHTML = '<span class="success">Thanks — we received your message. We will reply within 1 business day.</span>';
+
+          // Reset form (optional)
+          form.reset();
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send message';
+        }, 600);
+      });
+    })();
+  </script>
+</body>
+</html>
